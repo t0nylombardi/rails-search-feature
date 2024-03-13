@@ -1,0 +1,40 @@
+<%= form_with url: posts_path, method: "get", class: "mt-8" do |f| %>
+  <label for="search" class="search-label">Post</label>
+  <div class="relative">
+    <div class="search-icon">
+      <svg class="w-6 h-6 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+      </svg>
+    </div>
+
+    <div data-controller="address">
+      <%= f.text_field :post,
+                       id: :post,
+                       placeholder: "Search Post",
+                       class: "search-input",
+                       required: true %>
+
+      <%= f.hidden_field :search %>
+    </div>
+    <button id="submit" type="submit" class="search-btn">Search</button>
+  </div>
+<% end %>
+
+<% if @posts.present? %>
+  <div class="mt-8">
+    <h2 class="text-2xl font-bold text-white dark:text-gray-100">Posts</h2>
+    <div class="mt-4">
+      <%= turbo_frame_tag "posts" do %>
+        <% @posts.each do |post| %>
+          <div class="flex items " data-controller="address">
+            <div class="flex-1">
+              <h3 class="text-xl font-bold text-white dark:text-gray-100"><%= post.title %></h3>
+              <p class="text-gray-400 dark:text-gray-500"><%= post.body %></p>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
